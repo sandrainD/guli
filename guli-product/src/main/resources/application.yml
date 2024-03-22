@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: biubiu123
+    url: jdbc:mysql://127.0.0.1:3306/guli_pms
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  rsocket:
+    server:
+      port:
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto #配置全局主键自增，也可在主键的entity上自己配置注解
+      logic-delete-value: 1 #配置全局逻辑删除规则，1表示删除掉了，0表示没删除
+      logic-not-delete-value: 0
+server:
+  port: 10000
+logging:
+  level:
+    com.idea.guli: debug #设置该路径的日志输出级别，查看执行过程中的细节
