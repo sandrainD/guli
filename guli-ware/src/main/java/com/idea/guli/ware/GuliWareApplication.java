@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //@EnableFeignClients(basePackages="com.idea.guli.ware.feign") //配置在主类中可以简写
 @EnableFeignClients
 @EnableDiscoveryClient
+@EnableTransactionManagement
 @SpringBootApplication
 public class GuliWareApplication {
 

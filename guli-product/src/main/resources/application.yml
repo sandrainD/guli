@@ -12,13 +12,13 @@ spring:
 #    server:
 #      port:
 
-#mybatis-plus:
-#  mapper-locations: classpath*:/mapper/**/*.xml
-#  global-config:
-#    db-config:
-#      id-type: auto #配置全局主键自增，也可在主键的entity上自己配置注解
-#      logic-delete-value: 1 #配置全局逻辑删除规则，1表示删除掉了，0表示没删除
-#      logic-not-delete-value: 0
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto #配置全局主键自增，也可在主键的entity上自己配置注解
+      logic-delete-value: 1 #配置全局逻辑删除规则，1表示删除掉了，0表示没删除
+      logic-not-delete-value: 0
 server:
   port: 10000
 logging:
