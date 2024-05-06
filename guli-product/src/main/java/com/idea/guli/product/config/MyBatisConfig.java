@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement //开启事务
-//@MapperScan("com.idea.guli.product.dao")   //已经在application中开启扫描，多次扫描会重复扫描
+//@MapperScan("com.idea.guli.product.dao")   //已经在主程序中开启扫描，多次扫描会重复扫描
 public class MyBatisConfig {
 
     //引入分页插件
