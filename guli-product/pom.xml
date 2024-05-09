@@ -58,6 +58,15 @@
 <!--            <artifactId>aliyun-sdk-oss</artifactId>-->
 <!--            <version>3.10.2</version>-->
 <!--        </dependency>-->
+
+
+        <!-- 模板引擎 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+
     </dependencies>
     <dependencyManagement>
         <dependencies>

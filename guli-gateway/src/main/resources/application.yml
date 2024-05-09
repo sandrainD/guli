@@ -48,6 +48,10 @@ spring:
           #而原始访问路径localhost:88/api/yanzhengma.jpg
           #filters会重写请求,将api换成renren-fast
 
+        - id: guli_host_route
+          uri: lb://guli-product
+          predicates:
+            - Host=**.guli.com,guli.com
 
 
 
