@@ -124,7 +124,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.idea.gulisearch.search.GuliSearchApplication</mainClass>
+                    <mainClass>com.idea.guli.search.GuliSearchApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>

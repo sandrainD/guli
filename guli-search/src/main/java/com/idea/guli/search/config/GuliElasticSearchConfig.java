@@ -1,4 +1,4 @@
-package com.idea.gulisearch.search.config;
+package com.idea.guli.search.config;
 
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;

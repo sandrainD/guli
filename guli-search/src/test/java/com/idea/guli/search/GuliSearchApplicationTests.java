@@ -1,7 +1,7 @@
-package com.idea.gulisearch.search;
+package com.idea.guli.search;
 
 import com.alibaba.fastjson.JSON;
-import com.idea.gulisearch.search.config.GuliElasticSearchConfig;
+import com.idea.guli.search.config.GuliElasticSearchConfig;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
