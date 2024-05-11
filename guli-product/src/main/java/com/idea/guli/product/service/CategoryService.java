@@ -16,18 +16,21 @@ import java.util.Map;
  * @date 2022-10-09 15:49:09
  */
 public interface CategoryService extends IService<CategoryEntity> {
-
     PageUtils queryPage(Map<String, Object> params);
-
 
     List<CategoryEntity> listWithTree();
 
     void removeMenuByIds(List<Long> asList);
 
-    //找到catelogID 的完整路径
+    /**
+     * 找到catelogId的完整路径
+     * [父/子/孙]
+     * @param catelogId
+     * @return
+     */
     Long[] findCatelogPath(Long catelogId);
 
-    void updateCascade(CategoryEntity category);
+    public void updateCascade(CategoryEntity category);
 
     List<CategoryEntity> getLevel1Categorys();
 

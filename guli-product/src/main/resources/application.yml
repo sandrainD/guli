@@ -4,6 +4,10 @@ spring:
   #关闭thymeleaf缓存
   thymeleaf:
     cache: false
+  redis:
+    host: 127.0.0.1
+    password:
+    port: 6379
 #  cloud:
 #    nacos:
 #      discovery:
