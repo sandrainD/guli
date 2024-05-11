@@ -90,7 +90,7 @@
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
         </dependency>
-        <!-- 以后使用Redisson作为所有分布式锁 -->
+        <!-- 以后使用Redisson作为所有分布式锁,分布式对象等功能框架 -->
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>

@@ -33,13 +33,19 @@ public class GulimallProductApplicationTests {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
-
-
     @Resource
     private AttrGroupDao attrGroupDao;
 
     @Resource
     private SkuSaleAttrValueDao skuSaleAttrValueDao;
+
+
+    @Autowired
+    private RedissonClient redissonClient;
+    @Test
+    public void testRedisson() {
+        System.out.println(redissonClient);
+    }
 
 //    @Test
 //    public void test1() {
