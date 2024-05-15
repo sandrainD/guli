@@ -8,6 +8,9 @@ import org.redisson.api.RLock;
 import org.redisson.api.RReadWriteLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -111,33 +114,46 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
      * 级联更新所有的数据
      * @param category
      * 由于需要级联更新，所以需要开启事务，利于出错时回滚
+     *
+     * @CacheEvict:失效模式
+     * @CachePut:双写模式，需要有返回值
+     *      * 1、同时进行多种缓存操作：@Caching
+     *      * 2、指定删除某个分区下的所有数据 @CacheEvict(value = "category",allEntries = true)
+     *      * 3、存储同一类型的数据，都可以指定为同一分区
      */
+
+//     @Caching(evict = {
+//             @CacheEvict(value = "category",key = "'getLevel1Categorys'"),
+//             @CacheEvict(value = "category",key = "'getCatalogJson'")
+//     })
+    @CacheEvict(value = "category",allEntries = true)
     @Transactional
     @Override
+//    @CacheEvict(value = "category",key = "'getLevel1Categorys'")       //删除某个分区下的所有数据
     public void updateCascade(CategoryEntity category) {
         this.updateById(category);
         categoryBrandRelationService.updateCategory(category.getCatId(),category.getName());
     }
 
+    // 没一个需要换粗的数据我们都来指定要放到哪个名字的缓存.[缓存的分区(按照业务类型分)]
+    @Cacheable(value = {"category"},key = "#root.method.name",sync = true) //代表当前结果需要缓存，如果缓存中有，方法不用调用。若果缓存中没有，会调用方法，最后将方法的结果放入缓存
     @Override
     public List<CategoryEntity> getLevel1Categorys() {
         System.out.println("getLevel1Categorys........");
         long l = System.currentTimeMillis();
         List<CategoryEntity> categoryEntities = this.baseMapper.selectList(
                 new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
-        System.out.println("消耗时间："+ (System.currentTimeMillis() - l));
+//        System.out.println("消耗时间："+ (System.currentTimeMillis() - l));
         return categoryEntities;
     }
 
     @Override
+    @Cacheable(value = "category",key = "#root.methodName")
     public Map<String, List<Catelog2Vo>> getCatalogJson() {
         System.out.println("查询了数据库");
-
         //将数据库的多次查询变为一次
         List<CategoryEntity> selectList = this.baseMapper.selectList(null);
-
-        //1、查出所有分类
-        //1、1）查出所有一级分类
+        //1、查出所有分类          //1、1）查出所有一级分类
         List<CategoryEntity> level1Categorys = getParent_cid(selectList, 0L);
 
         //封装数据
