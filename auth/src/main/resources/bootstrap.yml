@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: guli-auth-server
+server:
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: e0dfe800-b4e8-4d45-a811-9cfb99018618
+  port: 20000
+
+
