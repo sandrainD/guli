@@ -1,15 +1,11 @@
 package com.idea.guli.product.service.impl;
 
-import com.alibaba.fastjson.TypeReference;
-import com.idea.common.utils.R;
 import com.idea.guli.product.entity.SkuImagesEntity;
 import com.idea.guli.product.entity.SpuInfoDescEntity;
 import com.idea.guli.product.service.*;
-import com.idea.guli.product.vo.SeckillSkuVo;
 import com.idea.guli.product.vo.SkuItemSaleAttrVo;
 import com.idea.guli.product.vo.SkuItemVo;
 import com.idea.guli.product.vo.SpuItemAttrGroupVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -51,7 +47,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 //    private SeckillFeignService seckillFeignService;
 
     @Resource
-    private ThreadPoolExecutor executor;
+    private ThreadPoolExecutor threadPoolExecutor;
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<SkuInfoEntity> page = this.page(
@@ -136,28 +132,28 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
             SkuInfoEntity info = this.getById(skuId);
             skuItemVo.setInfo(info);
             return info;
-        }, executor);
+        }, threadPoolExecutor);
 
 
         CompletableFuture<Void> saleAttrFuture = infoFuture.thenAcceptAsync((res) -> {
             //3、获取spu的销售属性组合
             List<SkuItemSaleAttrVo> saleAttrVos = skuSaleAttrValueService.getSaleAttrBySpuId(res.getSpuId());
             skuItemVo.setSaleAttr(saleAttrVos);
-        }, executor);
+        }, threadPoolExecutor);
 
 
         CompletableFuture<Void> descFuture = infoFuture.thenAcceptAsync((res) -> {
             //4、获取spu的介绍    pms_spu_info_desc
             SpuInfoDescEntity spuInfoDescEntity = spuInfoDescService.getById(res.getSpuId());
             skuItemVo.setDesc(spuInfoDescEntity);
-        }, executor);
+        }, threadPoolExecutor);
 
 
         CompletableFuture<Void> baseAttrFuture = infoFuture.thenAcceptAsync((res) -> {
             //5、获取spu的规格参数信息
             List<SpuItemAttrGroupVo> attrGroupVos = attrGroupService.getAttrGroupWithAttrsBySpuId(res.getSpuId(), res.getCatalogId());
             skuItemVo.setGroupAttrs(attrGroupVos);
-        }, executor);
+        }, threadPoolExecutor);
 
 
         // Long spuId = info.getSpuId();
@@ -167,7 +163,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         CompletableFuture<Void> imageFuture = CompletableFuture.runAsync(() -> {
             List<SkuImagesEntity> imagesEntities = skuImagesService.getImagesBySkuId(skuId);
             skuItemVo.setImages(imagesEntities);
-        }, executor);
+        }, threadPoolExecutor);
 
 //        CompletableFuture<Void> seckillFuture = CompletableFuture.runAsync(() -> {
 //            //3、远程调用查询当前sku是否参与秒杀优惠活动
