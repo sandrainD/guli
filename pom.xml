@@ -18,6 +18,12 @@
         <module>renren-generator</module>
         <module>guli-common</module>
         <module>guli-gateway</module>
+        <module>auth</module>
+        <module>guli-search</module>
+        <module>guli-third-party</module>
+        <module>guli-cart</module>
+        <module>sso-client-test</module>
+        <module>sso-server-test</module>
     </modules>
 
 </project>

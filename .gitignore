@@ -1,5 +1,10 @@
 **/.idea
 **/target
+**/target/
 **/*.iml
 server.txt
-*.iml
+
+/xxl-sso/xxl-sso-server/target/
+/xxl-sso/xxl-sso-samples/xxl-sso-web-sample-springboot/target/
+/xxl-sso/xxl-sso-samples/xxl-sso-token-sample-springboot/target/
+/xxl-sso/xxl-sso-core/target/
