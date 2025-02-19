@@ -3,6 +3,7 @@ package com.idea.guli.product.service.impl;
 import com.idea.guli.product.vo.SkuItemSaleAttrVo;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -36,6 +37,12 @@ public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueDao
         List<SkuItemSaleAttrVo> saleAttrVos = baseMapper.getSaleAttrBySpuId(spuId);
 
         return saleAttrVos;
+    }
+
+    @Override
+    public List<String> getSkuSaleAttrValuesAsStringList(Long skuId) {
+        SkuSaleAttrValueDao baseMapper = this.baseMapper;
+        return baseMapper.getSkuSaleAttrValuesAsStringList(skuId);
     }
 
 }

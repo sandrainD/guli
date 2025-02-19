@@ -76,7 +76,7 @@ public class CartController {
 
         cartService.addToCart(skuId, num);
 
-        attributes.addAttribute("skuId", skuId);
+        attributes.addAttribute("skuId", skuId);//重定向带上参数
         return "redirect:http://cart.gulimall.com/addToCartSuccessPage.html";
     }
 

@@ -1,5 +1,6 @@
-package com.idea.guli.cart.interceptor;
+package com.idea.guli.cart.config;
 
+import com.idea.guli.cart.interceptor.CartInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

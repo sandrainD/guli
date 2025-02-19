@@ -51,7 +51,21 @@ spring:
         - id: guli_host_route
           uri: lb://guli-product
           predicates:
-            - Host=**.guli.com,guli.com
+            - Host=guli.com,item.guli.com
 
+        - id: guli_search_route
+          uri: lb://guli-search
+          predicates:
+            - Host=search.guli.com
+
+        - id: guli_auth_route
+          uri: lb://guli-auth
+          predicates:
+            - Host=auth.guli.com
+
+        - id: guli_cart_route
+          uri: lb://guli-cart
+          predicates:
+            - Host=cart.guli.com
 
 

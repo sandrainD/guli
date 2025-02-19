@@ -24,7 +24,7 @@ import static com.idea.common.constant.CartConstant.TEMP_USER_COOKIE_TIMEOUT;
  * @author: zhangshuaiyin
  * @createTime: 2020-06-30 17:31
  **/
-@Component
+//@Component //添加web定制化配置webconfig，无需注入
 public class CartInterceptor implements HandlerInterceptor {
 
 
