@@ -1,9 +1,8 @@
 package com.idea.guli.cart.interceptor;
 
 
-import com.idea.common.vo.MemberResponseVo;
+import com.idea.common.vo.MemberRespVo;
 import com.idea.guli.cart.to.UserInfoTo;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,11 +44,11 @@ public class CartInterceptor implements HandlerInterceptor {
 
         HttpSession session = request.getSession();
         //获得当前登录用户的信息
-        MemberResponseVo memberResponseVo = (MemberResponseVo) session.getAttribute(LOGIN_USER);
+        MemberRespVo memberRespVo = (MemberRespVo) session.getAttribute(LOGIN_USER);
 
-        if (memberResponseVo != null) {
+        if (memberRespVo != null) {
             //用户登录了
-            userInfoTo.setUserId(memberResponseVo.getId());
+            userInfoTo.setUserId(memberRespVo.getId());
         }
 
         Cookie[] cookies = request.getCookies();

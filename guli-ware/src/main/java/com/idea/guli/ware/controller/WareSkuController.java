@@ -1,10 +1,14 @@
 package com.idea.guli.ware.controller;
 
+import com.idea.common.exception.BizCodeEnume;
+import com.idea.common.exception.NoStockException;
 import com.idea.common.to.SkuHasStockVo;
 import com.idea.common.utils.PageUtils;
 import com.idea.common.utils.R;
 import com.idea.guli.ware.entity.WareSkuEntity;
 import com.idea.guli.ware.service.WareSkuService;
+import com.idea.guli.ware.vo.LockStockResult;
+import com.idea.guli.ware.vo.WareSkuLockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +29,19 @@ import java.util.Map;
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
+
+    /**
+     * 为订单锁定库存
+     */
+    @PostMapping("/lock/order")
+    public R orderLockStock(@RequestBody WareSkuLockVo vo) {
+        try{
+            boolean b = wareSkuService.orderLockStock(vo);
+            return R.ok();
+        }catch (NoStockException e){
+            return R.error(BizCodeEnume.NO_STOCK_EXCEPTION.getCode(),BizCodeEnume.NO_STOCK_EXCEPTION.getMsg());
+        }
+    }
 
     /**
      * 查询sku是否有库存

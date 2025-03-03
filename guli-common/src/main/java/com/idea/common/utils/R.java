@@ -94,4 +94,12 @@ public class R<T> extends HashMap<String, Object> {
 	public Integer getCode() {
 		return (Integer) this.get("code");
 	}
+
+	//利用fastJson进行逆转
+	public <T>T getData2(String key,TypeReference<T> typeReference){
+		Object data = get(key);//默认map
+		String s = JSON.toJSONString(data);
+		T t = JSON.parseObject(s, typeReference);
+		return t;
+	}
 }

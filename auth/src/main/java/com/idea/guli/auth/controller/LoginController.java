@@ -4,7 +4,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.idea.common.constant.AuthServerConstant;
 import com.idea.common.exception.BizCodeEnume;
 import com.idea.common.utils.R;
-import com.idea.common.vo.MemberResponseVo;
+import com.idea.common.vo.MemberRespVo;
 import com.idea.guli.auth.feign.MemberFeignService;
 import com.idea.guli.auth.feign.ThirdPartFeignService;
 import com.idea.guli.auth.vo.UserLoginVo;
@@ -162,7 +162,7 @@ public class LoginController {
         //远程登录
         R login = memberFeignService.login(vo);
         if (login.getCode() == 0) {
-            MemberResponseVo data = (MemberResponseVo) login.getData("data", new TypeReference<MemberResponseVo>() {});
+            MemberRespVo data = (MemberRespVo) login.getData("data", new TypeReference<MemberRespVo>() {});
             session.setAttribute(LOGIN_USER,data);
             return "redirect:http://gulimall.com";
         } else {

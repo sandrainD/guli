@@ -4,7 +4,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson2.JSON;
 import com.idea.common.utils.HttpUtils;
 import com.idea.common.utils.R;
-import com.idea.common.vo.MemberResponseVo;
+import com.idea.common.vo.MemberRespVo;
 import com.idea.guli.auth.feign.MemberFeignService;
 import com.idea.guli.auth.vo.SocialUser;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +63,7 @@ public class OAuth2Controller {
             //调用远程服务
             R oauthLogin = memberFeignService.oauthLogin(socialUser);
             if (oauthLogin.getCode() == 0) {
-                MemberResponseVo data = (MemberResponseVo) oauthLogin.getData("data", new TypeReference<MemberResponseVo>() {});
+                MemberRespVo data = (MemberRespVo) oauthLogin.getData("data", new TypeReference<MemberRespVo>() {});
                 log.info("登录成功：用户信息：{}",data.toString());
 
                 //1、第一次使用session，命令浏览器保存卡号，JSESSIONID这个cookie
