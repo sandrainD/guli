@@ -10,12 +10,12 @@ spring:
           data-id: datasource.yml
           group: DEFAULT_GROUP
           refresh: false
-          ext-config[1]:
-            # 指定data id
-            data-id: mybatis.yml
-            # 指定分组
-            group: DEFAULT_GROUP
-            # 当前配置文件更改实现动态刷新
-            refresh: false
+        ext-config[1]:
+          # 指定data id
+          data-id: mybatis.yml
+          # 指定分组
+          group: DEFAULT_GROUP
+          # 当前配置文件更改实现动态刷新
+          refresh: false
       discovery:
         server-addr: 127.0.0.1:8848

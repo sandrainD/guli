@@ -1,19 +1,27 @@
 package com.idea.guli.order.config;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.Exchange;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import com.idea.guli.order.entity.OrderEntity;
+import com.rabbitmq.client.Channel;
+import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
 public class MyMQConfig {
+    @RabbitListener(queues = "order.release.order.queue")
+    public void listener(OrderEntity entity, Channel channel, Message message) throws IOException {
+        System.out.println("收到过期订单信息，准备关闭订单"+entity.getOrderSn());
+        channel.basicAck( message.getMessageProperties().getDeliveryTag(),false);
+    }
+
+
     @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
@@ -34,11 +42,11 @@ public class MyMQConfig {
         return new Queue("order.release.order.queue", true, false, false);
     }
 
-    @Bean
-    //监听秒杀业务队列
-    public Queue orderSeckillOrderQueue(){
-        return new Queue("order.seckill.order.queue",true,false,false);
-    }
+//    @Bean
+//    //监听秒杀业务队列
+//    public Queue orderSeckillOrderQueue(){
+//        return new Queue("order.seckill.order.queue",true,false,false);
+//    }
 
     @Bean
     public Exchange orderEventExchange() {
@@ -55,14 +63,14 @@ public class MyMQConfig {
         return new Binding("order.release.order.queue", Binding.DestinationType.QUEUE, "order-event-exchange", "order.release.order", null);
     }
 
-    @Bean
-    public Binding orderReleaseOtherBingding() {
-        return new Binding("stock.release.stock.queue", Binding.DestinationType.QUEUE, "order-event-exchange", "order.release.other.#", null);
-    }
-
-    @Bean
-    //秒杀业务绑定关系
-    public Binding orderSeckillOrderQueueBinding(){
-        return new Binding("order.seckill.order.queue",Binding.DestinationType.QUEUE,"order-event-exchange","order.seckill.order",null);
-    }
+//    @Bean
+//    public Binding orderReleaseOtherBingding() {
+//        return new Binding("stock.release.stock.queue", Binding.DestinationType.QUEUE, "order-event-exchange", "order.release.other.#", null);
+//    }
+//
+//    @Bean
+//    //秒杀业务绑定关系
+//    public Binding orderSeckillOrderQueueBinding(){
+//        return new Binding("order.seckill.order.queue",Binding.DestinationType.QUEUE,"order-event-exchange","order.seckill.order",null);
+//    }
 }

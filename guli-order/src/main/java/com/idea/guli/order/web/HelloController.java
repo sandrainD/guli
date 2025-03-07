@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Controller
@@ -17,8 +18,9 @@ public class HelloController {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    @ResponseBody
+
     @GetMapping("/test/createOrder")
+    @ResponseBody
     public String createOrderTest(){
         OrderEntity entity = new OrderEntity();
         entity.setOrderSn(UUID.randomUUID().toString());

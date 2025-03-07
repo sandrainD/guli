@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @createTime: 2020-06-23 20:28
  **/
 
-@ConfigurationProperties(prefix = "gulimall.thread")
+@ConfigurationProperties(prefix = "guli.thread")
 // @Component
 @Data
 public class ThreadPoolConfigProperties {

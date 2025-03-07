@@ -16,6 +16,7 @@ import com.idea.guli.ware.dao.WareSkuDao;
 import com.idea.guli.ware.entity.WareOrderTaskDetailEntity;
 import com.idea.guli.ware.entity.WareOrderTaskEntity;
 import com.idea.guli.ware.entity.WareSkuEntity;
+import com.idea.guli.ware.feign.OrderFeignService;
 import com.idea.guli.ware.feign.ProductFeignService;
 import com.idea.guli.ware.service.WareOrderTaskDetailService;
 import com.idea.guli.ware.service.WareOrderTaskService;
@@ -24,6 +25,7 @@ import com.idea.guli.ware.vo.OrderItemVo;
 import com.idea.guli.ware.vo.OrderVo;
 import com.idea.guli.ware.vo.WareSkuLockVo;
 import lombok.Data;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,16 +42,23 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
 
     @Autowired
     WareSkuDao wareSkuDao;
-    @Autowired
-    ProductFeignService productFeignService;
+
     @Autowired
     WareOrderTaskService orderService;
+
     @Autowired
     WareOrderTaskDetailService orderDetailService;
 
     @Autowired
     WareOrderTaskService wareOrderTaskService;
 
+    @Autowired
+    OrderFeignService orderFeignService;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+    @Autowired
+    ProductFeignService productFeignService;
 
 
     @Override
@@ -127,7 +136,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
      */
     @Transactional(rollbackFor = NoStockException.class)
     @Override
-    public boolean orderLockStock(WareSkuLockVo vo) {
+    public Boolean orderLockStock(WareSkuLockVo vo) {
         //保存库存工作单详情,方便追溯
         WareOrderTaskEntity taskEntity = new WareOrderTaskEntity();
         taskEntity.setOrderSn(vo.getOrderSn());
@@ -201,7 +210,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             String orderSn = taskEntity.getOrderSn();
             R r = orderFeignService.getOrderStatus(orderSn);
             if (r.getCode() == 0) {
-                OrderVo data = r.getData(new TypeReference<OrderVo>() {
+                OrderVo data = (OrderVo) r.getData(new TypeReference<OrderVo>() {
                 });
                 if (data == null || data.getStatus() == 4) {
                     //没有这个订单 或者 有订单但订单状态是已取消,解锁库存

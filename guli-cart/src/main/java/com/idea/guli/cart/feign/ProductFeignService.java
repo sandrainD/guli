@@ -17,7 +17,7 @@ import java.util.List;
  * @createTime: 2020-06-30 20:36
  **/
 
-@FeignClient("mall-product")
+@FeignClient("guli-product")
 public interface ProductFeignService {
 
     /**

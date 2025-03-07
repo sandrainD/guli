@@ -34,6 +34,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
@@ -137,7 +139,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
      * @param vo
      * @return
      */
-    @Transactional
+    @Transactional (propagation = Propagation.REQUIRED,timeout = 30)
+//    @GlobalTransactional
+    //本地事务，只能控制自己回滚，无法控制远程服务回滚
+    //分布式事务，最大原因，网络问题&本地方法异常，远程不回滚
+    //(isolation = Isolation.REPEATABLE_READ)MYSQL默认隔离级别-可重复读
+    //(propagation = Propagation.REQUIRED)事务的传播行为
+    //,timeout = 30超时时间30秒  如果a方法调用b方法，公用一个事务，a的事务超时时间会传播到b事务
+    //在同一个类里面，编写两个方法，内部调用的时候，会导致事务设置失效。原因是没有用到代理对象的缘故。
     @Override
     public SubmitOrderResponseVo submitOrder(OrderSubmitVo vo) {
         submitVoThreadLocal.set(vo);
@@ -416,7 +425,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         );
         List<OrderEntity> order_sn = page.getRecords().stream().map(order -> {
             List<OrderItemEntity> list = orderItemService.list(new QueryWrapper<OrderItemEntity>().eq("order_sn", order.getOrderSn()));
-            order.setItemEntities(list);
+//            order.setItemEntities(list);
             return order;
         }).collect(Collectors.toList());
         page.setRecords(order_sn);
@@ -441,7 +450,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         if(vo.getTrade_status().equals("TRADE_SUCCESS")||vo.getTrade_status().equals("TRADE_FINISHED")){
             //支付成功
             String outTradeNo = vo.getOut_trade_no();
-            this.baseMapper.updateOrderStatus(outTradeNo,OrderStatusEnum.PAYED.getCode());
+//            this.baseMapper.updateOrderStatus(outTradeNo,OrderStatusEnum.PAYED.getCode());
         }
         return "success";
     }

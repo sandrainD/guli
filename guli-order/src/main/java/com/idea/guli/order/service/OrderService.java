@@ -1,6 +1,7 @@
 package com.idea.guli.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.idea.common.to.mq.SeckillOrderTo;
 import com.idea.common.utils.PageUtils;
 import com.idea.guli.order.entity.OrderEntity;
 import com.idea.guli.order.vo.*;
