@@ -23,7 +23,14 @@ import java.util.Map;
 public class OrderController {
     @Autowired
     private OrderService orderService;
-
+    /**
+     * 查询订单状态
+     */
+    @GetMapping("/status/{orderSn}")
+    public R getOrderStatus(@PathVariable("orderSn") String orderSn){
+        OrderEntity orderEntity = orderService.getOrderByOrderSn(orderSn);
+        return R.ok().setData(orderEntity);
+    }
     /**
      * 列表
      */
