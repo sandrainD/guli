@@ -63,11 +63,11 @@ public class MyMQConfig {
         return new Binding("order.release.order.queue", Binding.DestinationType.QUEUE, "order-event-exchange", "order.release.order", null);
     }
 
-//    @Bean
-//    public Binding orderReleaseOtherBingding() {
-//        return new Binding("stock.release.stock.queue", Binding.DestinationType.QUEUE, "order-event-exchange", "order.release.other.#", null);
-//    }
-//
+    @Bean
+    public Binding orderReleaseOtherBingding() {
+        return new Binding("stock.release.stock.queue", Binding.DestinationType.QUEUE, "order-event-exchange", "order.release.other.#", null);
+    }
+
 //    @Bean
 //    //秒杀业务绑定关系
 //    public Binding orderSeckillOrderQueueBinding(){

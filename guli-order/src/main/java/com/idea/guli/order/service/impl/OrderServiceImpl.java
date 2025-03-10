@@ -386,11 +386,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             OrderTo orderTo = new OrderTo();
             BeanUtils.copyProperties(orderEntity, orderTo);
             try {
-                //每一条消息进行日志记录(数据库保存每一条消息的详细信息)
-                //定期扫描数据库将失败的消息再发送一遍
+                //TODO 每一条消息进行日志记录(数据库保存每一条消息的详细信息)
+                //TODO 定期扫描数据库将失败的消息再发送一遍
                 rabbitTemplate.convertAndSend("order-event-exchange", "order.release.other", orderTo);
             } catch (Exception e) {
-                //将没法送成功的消息进行重试发送
+                //TODO 将没法送成功的消息进行重试发送
             }
         }
     }

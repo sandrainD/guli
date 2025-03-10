@@ -7,6 +7,7 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
 
 import javax.annotation.PostConstruct;
@@ -34,7 +35,7 @@ spring.rabbitmq.listener.simple.acknowledge-mode=manual
  */
 
 
-//@Configuration
+@Configuration
 public class MyRabbitConfig {
 
     @Autowired
@@ -86,9 +87,6 @@ public class MyRabbitConfig {
                         + "]==>replyText[" + replyText + "]==>[exchange" + exchange + "]==>routingKey[" + routingKey + "]");
             }
         });
-        {
 
-        }
-        ;
    }
 }
