@@ -1,18 +1,22 @@
 package com.idea.guli.coupon.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import com.idea.guli.coupon.entity.SeckillSkuRelationEntity;
 import lombok.Data;
 
 /**
  * 秒杀活动场次
- * 
- * @author lts
- * @email j2568095536@gmail.com
- * @date 2022-10-09 17:10:54
+ *
+ * @author AdverseQ
+ * @email sunlightcs@gmail.com
+ * @date 2020-11-30 05:47:23
  */
 @Data
 @TableName("sms_seckill_session")
@@ -45,4 +49,6 @@ public class SeckillSessionEntity implements Serializable {
 	 */
 	private Date createTime;
 
+	@TableField(exist = false)
+	private List<SeckillSkuRelationEntity> relationSkus;
 }

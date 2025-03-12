@@ -461,6 +461,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
      */
     @Override
     public void createSeckillOrder(SeckillOrderTo seckillOrder) {
+        //TODO 保存订单信息
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setOrderSn(seckillOrder.getOrderSn());
         orderEntity.setMemberId(seckillOrder.getMemberId());
@@ -468,10 +469,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         BigDecimal multiply = seckillOrder.getSeckillPrice().multiply(new BigDecimal("" + seckillOrder.getNum()));
         orderEntity.setPayAmount(multiply);
         this.save(orderEntity);
-        //保存订单项信息
+        //TODO 保存订单项信息
         OrderItemEntity itemEntity = new OrderItemEntity();
         itemEntity.setOrderSn(seckillOrder.getOrderSn());
         itemEntity.setRealAmount(multiply);
+        //TODO 获取当前SKU详细信息进行设置 productFeignService.getSpuInfoBySkuId()
         itemEntity.setSkuQuantity(seckillOrder.getNum());
         orderItemService.save(itemEntity);
     }
