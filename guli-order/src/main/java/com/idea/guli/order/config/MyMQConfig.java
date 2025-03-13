@@ -23,7 +23,7 @@ public class MyMQConfig {
 
 
     @Bean
-    public MessageConverter messageConverter() {
+    public MessageConverter mqMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 
