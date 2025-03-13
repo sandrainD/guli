@@ -22,6 +22,7 @@
         <module>guli-search</module>
         <module>guli-third-party</module>
         <module>guli-cart</module>
+        <module>guli-seckill</module>
         <module>sso-client-test</module>
         <module>sso-server-test</module>
     </modules>
