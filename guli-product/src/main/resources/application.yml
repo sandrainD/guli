@@ -30,3 +30,5 @@ server:
 logging:
   level:
     com.idea.guli: debug #设置该路径的日志输出级别，查看执行过程中的细节
+    org.springframework.cloud.openfeign: debug
+    org.springframework.cloud.sleuth: debug
